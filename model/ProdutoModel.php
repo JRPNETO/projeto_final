@@ -2,36 +2,36 @@
 
 require_once "config/Conexao.php";
 
-class CategoriaModel{
+class ProdutoModel{
     var $conexao;
 
     function __construct(){
         $this->conexao = Conexao::getConnection();
     }
 
-    function inserir($nome){
-        $sql = "INSERT INTO categoria (nome) VALUES (?)";
+    function inserir($nome, $descricao, $preco, $marca, $foto, $idcategoria){
+        $sql = "INSERT INTO produto (nome, descricao, marca,  preco, foto, categoria_idcategoria) VALUES (?, ?, ?, ?, ?, ?)";
         $comando = $this->conexao->prepare($sql);
-        $comando->bind_param("s", $nome);
+        $comando->bind_param("sssdsi", $nome, $descricao,  $marca, $preco, $foto, $idcategoria);
         $comando->execute();
     }
 
     function excluir($id){
-        $sql = "DELETE FROM categoria WHERE idcategoria = ?";
+        $sql = "DELETE FROM produto WHERE idproduto = ?";
         $comando = $this->conexao->prepare($sql);
         $comando->bind_param("i", $id);
         $comando->execute();
     }
 
-    function atualizar($id, $nome){
-        $sql = "UPDATE categoria SET nome = ? WHERE idcategoria = ?";
+    function atualizar($id, $nome, $descricao, $preco, $marca, $foto, $idcategoria){
+        $sql = "UPDATE produto SET nome = ?, descricao =?, preco=?, marca=,? foto=?, categoria_idcategoria=? WHERE idproduto = ?";
         $comando = $this->conexao->prepare($sql);
-        $comando->bind_param("si", $nome, $id);
+        $comando->bind_param("ssdssi", $nome, $descricao, $preco, $marca, $foto, $idcategoria, $id);
         $comando->execute();
     }
 
     function buscarPorId($id){
-        $sql = "SELECT * FROM categoria WHERE idcategoria = ?";
+        $sql = "SELECT * FROM produto WHERE idproduto = ?";
         $comando = $this->conexao->prepare($sql);
         $comando->bind_param("i", $id);
         if($comando->execute()){
@@ -42,7 +42,7 @@ class CategoriaModel{
     }
 
     function buscarTudo(){
-        $sql = "SELECT * FROM categoria";
+        $sql = "SELECT * FROM produto";
         $comando = $this->conexao->prepare($sql);
 
         if($comando->execute()){

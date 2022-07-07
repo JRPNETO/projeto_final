@@ -1,6 +1,9 @@
 <?php
+
+$base_url = "http://localhost/jose/projeto_final/index.php";
 function base_url(){
-    return "http://localhost/jose/projeto_final/index.php?c=categoria&m=index.php";
+  global $base_url;
+  return  $base_url;  
 }
 
 

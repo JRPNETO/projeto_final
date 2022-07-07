@@ -1,30 +1,30 @@
 <?php
-require "model/CategoriaModel.php";
+require "model/UsuarioModel.php";
 
-class Categoria{
+class Usuario{
 
     function __construct() {
-        $this->model = new CategoriaModel();
+        $this->model = new UsuarioModel();
     }
 
     function index(){
-        $categorias = $this->model->buscarTudo();
+        $usuario = $this->model->buscarTudo();
        include "view/template/cabecalho.php";
        include "view/template/menu.php";
-       include "view/categoria/listagem.php";
+       include "view/usuario/listagem.php";
        include "view/template/rodape.php";
     }
 
     function add(){
         include "view/template/cabecalho.php";
         include "view/template/menu.php";
-        include "view/categoria/form.php";
+        include "view/usuario/form.php";
         include "view/template/rodape.php";
     }
 
     function excluir($id){
         $this->model->excluir($id);
-        header('location: ?c=categoria');
+        header('location: ?c=usuario');
     }
 
     function editar($id){
@@ -32,17 +32,17 @@ class Categoria{
         $categoria = $this->model->buscarPorId($id);
         include "view/template/cabecalho.php";
         include "view/template/menu.php";
-        include "view/categoria/form.php";
+        include "view/usuario/form.php";
         include "view/template/rodape.php";
     }
     Function salvar(){
-        if(isset($_POST['categoria']) && !empty($_POST['categoria'])){
-           if(empty($_POST['idcategoria'])){
-            $this->model->inserir($_POST['categoria']);
+        if(isset($_POST['login']) && !empty($_POST['login'])){
+           if(empty($_POST['idusuario'])){
+            $this->model->inserir($_POST['login'], $_POST['login']);
            }else{
-            $this->model->atualizar($_POST['idcategoria'], $_POST['categoria']);
+            $this->model->atualizar($_POST['login'], $_POST['login']);
            }
-            header('Location: ?c=categoria');
+            header('Location: ?c=usuario');
         }else{
             echo "Ocorreu um erro, pois os dados não foram enviados";
         }
